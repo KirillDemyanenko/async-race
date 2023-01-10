@@ -1,0 +1,36 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "airbnb-base",
+    "airbnb-typescript"
+  ],
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true
+  },
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-console": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 140
+      }
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ]
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  }
+}
