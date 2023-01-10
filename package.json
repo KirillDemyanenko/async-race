@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "build:dev": "webpack",
-    "serve": "webpack serve --mode=development --progress"
+    "run": "webpack serve --mode=development --progress"
   },
   "author": "mikhama",
   "license": "MIT",

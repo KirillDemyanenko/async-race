@@ -15,11 +15,14 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
     },
+    devtool: 'inline-source-map',
     devServer: {
+        open: true,
         static: {
             directory: path.join(__dirname, 'public'),
         },
         compress: true,
+        hot: true,
         port: 9000,
     },
     module: {
