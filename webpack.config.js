@@ -18,9 +18,8 @@ module.exports = {
     devtool: 'inline-source-map',
     devServer: {
         open: true,
-        static: {
-            directory: path.join(__dirname, 'public'),
-        },
+        liveReload: true,
+        watchFiles: ['./src/**/*'],
         compress: true,
         hot: true,
         port: 9000,
