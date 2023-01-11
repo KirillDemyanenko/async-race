@@ -1,27 +1,31 @@
-import './style.scss'
-import {Garage} from "./model/garage";
-import {carData} from "./types";
+import './style.scss';
+import Garage from './model/garage';
+// import {Car} from './types';
+// import { Car } from './types';
+// import { CarData, Car } from './types';
 
-console.log('app starts!')
-
-const a = new Garage()
+Garage.getCars().then(result => {
+    console.log(result);}, error => {throw new Error(error.text)})
 // console.log((async () => {
-//     await a.getCars()
-// })())
+//   Garage.getCar(5);
+// })());
+// const car: CarData = {
+//   name: 'New Red Car',
+//   color: '#ff0000',
+// };
+// const newCar: CarData = {
+//   name: 'Car with new name',
+//   color: '#ff00ff',
+// };
 // console.log((async () => {
-//     await a.getCar(5)
-// })())
-const car: carData = {"name": "New Red Car", "color": "#ff0000"}
-const newCar: carData = {"name": "Car with new name", "color": "#ff00ff"}
+//   await Garage.createCar(car);
+// })());
 // console.log((async () => {
-//     await a.createCar(car)
-// })())
+//   await Garage.deleteCar(6);
+// })());
 // console.log((async () => {
-//     await a.deleteCar(6)
-// })())
-console.log((async () => {
-    await a.getCars()
-})())
-console.log((async () => {
-    await a.updateCar(newCar, 4)
-})())
+//   await Garage.getCars();
+// })());
+// console.log((async () => {
+//   await Garage.updateCar(newCar, 4);
+// })());
