@@ -1,9 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Async race</title>
 </head>
 <body>
+<header>
+    <a href="/"><img src="./assets/logo.png" alt="Async race">
+        <h1>async race</h1></a>
+    <ul>
+        <li>garage</li>
+        <li>winners</li>
+    </ul>
+</header>
+<main>
+    <section class="car-management">
+        <form id="create-car">
+            <p>Create new car</p>
+            <label>
+                Car model
+                <input type="text">
+            </label>
+            <label>
+                Choose car color
+                <input type="color">
+            </label>
+            <button>create car</button>
+        </form>
+        <form id="update-car">
+            <p>Update your car</p>
+            <label>
+                Car model
+                <input type="text">
+            </label>
+            <label>
+                Choose car color
+                <input type="color">
+            </label>
+            <button>update car</button>
+        </form>
+        <div class="generate-cars">
+            <button>generate 100 cars automatically</button>
+        </div>
+        <div class="race-management">
+            <button>start race</button>
+            <button>reset race</button>
+        </div>
+    </section>
+    <section class="race-track">
+        <div class="car-track">1</div>
+        <div class="car-track">2</div>
+        <div class="car-track">3</div>
+        <div class="car-track">4</div>
+        <div class="car-track">5</div>
+        <div class="car-track">6</div>
+        <div class="car-track">7</div>
+    </section>
+</main>
+<footer></footer>
 </body>
 </html>
