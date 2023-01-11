@@ -5,15 +5,16 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "airbnb-base",
-    "airbnb-typescript",
-    "stylelint-config-standard"
+    "airbnb-typescript"
   ],
   "env": {
     "node": true,
     "es6": true,
     "browser": true
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "rules": {
     "no-console": "off",
     "max-len": [
@@ -23,31 +24,17 @@
       }
     ],
     "semi": [
-      "error",
+      2,
       "always"
     ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "selector-class-pattern": null,
-    "at-rule-no-unknown": [
-      true,
-      {
-        "ignoreAtRules": ["--my-at-rule"]
-      }
-    ],
-    "indentation": "tab",
-    "number-leading-zero": null,
-    "number-max-precision": [
-      4,
-      {
-        "severity": "warning"
-      }
-    ],
-    "unit-allowed-list": ["em", "rem", "s"]
+    "@typescript-eslint/quotes": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
+    "strict": "error"
   },
   "parserOptions": {
-    "ecmaVersion": "latest"
+    "project": [
+      "tsconfig.json"
+    ]
   }
 }
