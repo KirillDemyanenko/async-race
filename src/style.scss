@@ -177,3 +177,21 @@ body {
     background-color: red;
   }
 }
+svg {
+  animation-duration: 5s;
+  animation-name: slidein;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+@keyframes slidein {
+  from {
+    margin-left: 0;
+    width: 0;
+  }
+
+  to {
+    margin-left: 0;
+    width: 75%;
+  }
+}
+
