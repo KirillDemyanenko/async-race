@@ -1,19 +1,22 @@
 import { Car } from '../types';
 
 class Garage {
+
   /* Returns json data about cars in a garage. */
-  static getCars(page?: number, limit?: number): Promise<Car[]> {
-    const opt: string = ''.concat(page ? page.toString() : '')
-      .concat(limit ? limit.toString() : '');
-    console.log(opt);
-      return fetch('http://127.0.0.1:3000/garage')
+  async getCars(page?: number, limit?: number): Promise<Car[]> {
+      let options: string = '?'
+      // if (arguments.length > 0) {
+      //   options.concat(`${page ? /`_page=${page}/` : ''}`)
+      //   const page: string =
+      //   const limit: string = limit ? `_page=${limit}` : ''
+      // }
+      return await fetch('http://127.0.0.1:3000/garage'.concat(options))
       .then((response) => {
         if (!response.ok) {
           throw new Error(response.statusText);
         }
         return response.json() as Promise<Car[]>;
-      });
-
+      })
   }
 
 //   /* Returns json data about specified car. */
