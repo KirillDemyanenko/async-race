@@ -1,31 +1,16 @@
 import './style.scss';
 import Garage from './model/garage';
-// import {Car} from './types';
-// import { Car } from './types';
-// import { CarData, Car } from './types';
-
-Garage.getCars().then(result => {
-    console.log(result);}, error => {throw new Error(error.text)})
-// console.log((async () => {
-//   Garage.getCar(5);
-// })());
-// const car: CarData = {
-//   name: 'New Red Car',
-//   color: '#ff0000',
-// };
-// const newCar: CarData = {
-//   name: 'Car with new name',
-//   color: '#ff00ff',
-// };
-// console.log((async () => {
-//   await Garage.createCar(car);
-// })());
-// console.log((async () => {
-//   await Garage.deleteCar(6);
-// })());
-// console.log((async () => {
-//   await Garage.getCars();
-// })());
-// console.log((async () => {
-//   await Garage.updateCar(newCar, 4);
-// })());
+import {drawCar} from './view/view';
+const a: Garage = new Garage()
+async function start () {
+    const cars = await a.getCars();
+    setTimeout(() => console.log(cars), 2000)
+}
+(async () => await start())()
+drawCar('#c4ff12', 1)
+drawCar('#c00dd5', 2)
+drawCar('#1144b0', 3)
+drawCar('#de0fa4', 4)
+drawCar('#59550b', 5)
+drawCar('#669188', 6)
+drawCar('#620e4e', 7)
