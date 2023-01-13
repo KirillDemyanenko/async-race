@@ -1,4 +1,29 @@
 $color_background: #d3caff;
+@mixin button-style {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  align-self: center;
+  text-align: center;
+  color: #000000;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: rgba(255, 255, 255, .5) 1px 1px, rgba(100, 100, 100, .3) 3px 7px 3px;
+  user-select: none;
+  outline: none;
+  border-radius: 3px / 100%;
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, .0) 30%, rgba(255, 255, 255, .8), rgba(255, 255, 255, .0) 70%),
+  linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 90%, rgba(255, 255, 255, .3)),
+  linear-gradient(to right, rgba(125, 125, 125, 1), rgba(255, 255, 255, .9) 45%, rgba(125, 125, 125, .5)),
+  linear-gradient(to right, rgba(125, 125, 125, 1), rgba(255, 255, 255, .9) 45%, rgba(125, 125, 125, .5)),
+  linear-gradient(to right, rgba(223, 190, 170, 1), rgba(255, 255, 255, .9) 45%, rgba(223, 190, 170, .5)),
+  linear-gradient(to right, rgba(223, 190, 170, 1), rgba(255, 255, 255, .9) 45%, rgba(223, 190, 170, .5));
+  background-repeat: no-repeat;
+  background-size: 200% 100%, auto, 100% 2px, 100% 2px, 100% 1px, 100% 1px;
+  background-position: 200% 0, 0 0, 0 0, 0 100%, 0 4px, 0 calc(100% - 4px);
+  box-shadow: rgba(0, 0, 0, .5) 3px 10px 10px -10px;
+}
 
 * {
   margin: 0;
@@ -57,35 +82,13 @@ body {
     ul {
       list-style-type: none;
       font-size: 1.7em;
-      text-transform: uppercase;
       display: flex;
       width: 60%;
       justify-content: space-around;
 
       li {
-        position: relative;
-        cursor: pointer;
-        display: inline-block;
-        align-self: center;
-        text-align: center;
-        color: #000000;
-        font-weight: bold;
-        text-decoration: none;
-        text-shadow: rgba(255, 255, 255, .5) 1px 1px, rgba(100, 100, 100, .3) 3px 7px 3px;
-        user-select: none;
-        padding: 0 2em;
-        outline: none;
-        border-radius: 3px / 100%;
-        background-image: linear-gradient(45deg, rgba(255, 255, 255, .0) 30%, rgba(255, 255, 255, .8), rgba(255, 255, 255, .0) 70%),
-        linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 90%, rgba(255, 255, 255, .3)),
-        linear-gradient(to right, rgba(125, 125, 125, 1), rgba(255, 255, 255, .9) 45%, rgba(125, 125, 125, .5)),
-        linear-gradient(to right, rgba(125, 125, 125, 1), rgba(255, 255, 255, .9) 45%, rgba(125, 125, 125, .5)),
-        linear-gradient(to right, rgba(223, 190, 170, 1), rgba(255, 255, 255, .9) 45%, rgba(223, 190, 170, .5)),
-        linear-gradient(to right, rgba(223, 190, 170, 1), rgba(255, 255, 255, .9) 45%, rgba(223, 190, 170, .5));
-        background-repeat: no-repeat;
-        background-size: 200% 100%, auto, 100% 2px, 100% 2px, 100% 1px, 100% 1px;
-        background-position: 200% 0, 0 0, 0 0, 0 100%, 0 4px, 0 calc(100% - 4px);
-        box-shadow: rgba(0, 0, 0, .5) 3px 10px 10px -10px;
+        @include button-style;
+        padding: 0.2em 2em;
 
         &:hover {
           transition: 1s linear;
@@ -123,33 +126,11 @@ body {
           justify-content: space-evenly;
 
           button {
-            text-transform: uppercase;
+            @include button-style;
             background-color: transparent;
-            padding: 0.5em 3em;
+            padding: 0.2em;
             width: 100%;
-            margin: 0 10px;
-            position: relative;
-            cursor: pointer;
-            display: inline-block;
-            align-self: center;
-            text-align: center;
-            color: #000000;
-            font-weight: bold;
-            text-decoration: none;
-            text-shadow: rgba(255, 255, 255, .5) 1px 1px, rgba(100, 100, 100, .3) 3px 7px 3px;
-            user-select: none;
-            outline: none;
-            border-radius: 3px / 100%;
-            background-image: linear-gradient(45deg, rgba(255, 255, 255, .0) 30%, rgba(255, 255, 255, .8), rgba(255, 255, 255, .0) 70%),
-            linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 90%, rgba(255, 255, 255, .3)),
-            linear-gradient(to right, rgba(125, 125, 125, 1), rgba(255, 255, 255, .9) 45%, rgba(125, 125, 125, .5)),
-            linear-gradient(to right, rgba(125, 125, 125, 1), rgba(255, 255, 255, .9) 45%, rgba(125, 125, 125, .5)),
-            linear-gradient(to right, rgba(223, 190, 170, 1), rgba(255, 255, 255, .9) 45%, rgba(223, 190, 170, .5)),
-            linear-gradient(to right, rgba(223, 190, 170, 1), rgba(255, 255, 255, .9) 45%, rgba(223, 190, 170, .5));
-            background-repeat: no-repeat;
-            background-size: 200% 100%, auto, 100% 2px, 100% 2px, 100% 1px, 100% 1px;
-            background-position: 200% 0, 0 0, 0 0, 0 100%, 0 4px, 0 calc(100% - 4px);
-            box-shadow: rgba(0, 0, 0, .5) 3px 10px 10px -10px;
+            border: none;
 
             &:hover {
               transition: 1s linear;
@@ -172,8 +153,14 @@ body {
             justify-content: space-between;
             padding: 5px 15px;
 
-            input {
+            input[type="text"] {
               border-radius: 5px;
+              padding: 1px 10px;
+            }
+            input[type="color"] {
+              background-color: transparent;
+              border: none;
+              width: 20%;
             }
           }
 
@@ -187,7 +174,7 @@ body {
         padding: 5px;
         border-radius: 10px;
         gap: 5px;
-        background: linear-gradient(225deg, rgb(67, 154, 25) 36%, rgb(3, 128, 18) 48%, rgb(36, 103, 24) 59%);
+        background: linear-gradient(225deg, rgb(107, 220, 52) 36%, rgb(6, 171, 25) 48%, rgb(32, 129, 14) 59%);
 
         .car-track {
           padding: 10px 0;
