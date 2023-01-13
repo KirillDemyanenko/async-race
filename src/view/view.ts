@@ -1,17 +1,105 @@
+/* Generates a header for the site*/
+export function generateHeader(): void {
+    const headerMenu = ['garage', 'winners'];
+    const header = document.createElement('header');
+    const a = document.createElement('a');
+    const img = document.createElement('img');
+    const h1 = document.createElement('h1');
+    const ul = document.createElement('ul');
+    img.setAttribute('src', './assets/logo.png');
+    img.setAttribute('alt', 'Async race');
+    a.append(img);
+    a.setAttribute('href', '/');
+    h1.innerText = 'async race';
+    a.append(h1);
+    header.append(a);
+    for (let i = 0; i < 2; i++) {
+        const li = document.createElement('li');
+        li.innerText = headerMenu[i];
+        ul.append(li);
+    }
+    header.append(ul);
+    document.body.append(header);
+    generateMain();
+}
+
+/* Generates a section for the main*/
+function generateSectionCarManagement(): HTMLElement {
+    const section = document.createElement('section');
+    section.classList.add('car-management');
+    for (let i = 0; i < 2; i++) {
+        let form = document.createElement('form');
+        form.id = i ? 'update-car' : 'create-car';
+        for (let j = 0; j < 2; j++) {
+            let label = document.createElement('label');
+            let input = document.createElement('input');
+            let button = document.createElement('button');
+            label.innerText = j ? 'Choose car color' : 'Car model';
+            input.type = j ? 'color' : 'text';
+            button.innerText = j ? 'update car' : 'create car';
+            button.id = j ? 'update-car__btn' : 'create-car__btn';
+            label.append(input);
+            form.append(label);
+            form.append(button);
+        }
+        section.append(form);
+    }
+    let div = document.createElement('div');
+    div.classList.add('generate-cars');
+    let button = document.createElement('button');
+    button.id = 'generate-car__btn';
+    button.innerText = 'generate 100 cars automatically';
+    div.append(button);
+    section.append(div);
+    div = document.createElement('div');
+    div.classList.add('race-management');
+    for (let i = 0; i < 2; i++) {
+        let button = document.createElement('button');
+        button.id = i ? 'reset__btn' : 'start race';
+        button.innerText = i ? 'reset race' : 'start__btn';
+        div.append(button);
+    }
+    section.append(div);
+    return section;
+}
+
+/* Generates a main for the site*/
+function generateMain(): void {
+    const main = document.createElement('main');
+    let section = document.createElement('section');
+    main.append(generateSectionCarManagement());
+    section.classList.add('race-track');
+    for (let i = 0; i <= 6; i++) {
+        let div = document.createElement('div');
+        div.classList.add('car-track');
+        div.id = `track-${i}`;
+        section.append(div);
+    }
+    main.append(section);
+    document.body.append(main);
+    generateFooter();
+}
+
+/* Generates a footer for the site*/
+function generateFooter() {
+    const footer = document.createElement('footer');
+    document.body.append(footer);
+}
+
 /* Generates an svg image of the car and places it on the desired track */
 export function drawCar(color: string, track: number) {
     let ns = 'http://www.w3.org/2000/svg';
     let svg = document.createElementNS(ns, 'svg');
-    let g = document.createElementNS(ns, 'g')
-    svg.setAttribute('width', '150px')
-    svg.setAttribute('id', 'svg1')
-    svg.setAttribute('height','60px')
-    svg.setAttribute('viewBox','0 0 1280.000000 867.000000')
-    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet')
-    g.setAttribute('transform', 'translate(0.000000,867.000000) scale(0.100000,-0.10000)')
-    g.setAttribute('fill', color)
-    g.setAttribute('stroke', 'none')
-    let path = document.createElementNS(ns, 'path')
+    let g = document.createElementNS(ns, 'g');
+    svg.setAttribute('width', '150px');
+    svg.setAttribute('id', 'svg1');
+    svg.setAttribute('height', '60px');
+    svg.setAttribute('viewBox', '0 0 1280.000000 867.000000');
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    g.setAttribute('transform', 'translate(0.000000,867.000000) scale(0.100000,-0.10000)');
+    g.setAttribute('fill', color);
+    g.setAttribute('stroke', 'none');
+    let path = document.createElementNS(ns, 'path');
     path.setAttribute('d', 'M6201 5679 c-569 -30 -1155 -158 -1689 -370 -426 -170 -836 -397\n' +
         '-1252 -693 l-115 -82 -121 4 -120 4 -34 62 c-56 101 -184 286 -260 374 -40 46\n' +
         '-108 112 -151 145 -69 55 -79 66 -79 95 0 41 -35 62 -75 44 -53 -24 -12 -115\n' +
@@ -44,9 +132,9 @@ export function drawCar(color: string, track: number) {
         '82 13 80 14 -2 2 -116 -5 -253 -15 -138 -10 -277 -20 -310 -21 l-59 -3 -78\n' +
         '199 c-43 109 -80 201 -84 204 -3 3 -42 7 -87 9 -61 2 -87 -1 -103 -12z M9508 3631 c-74 -24 -116 -51 -166 -105 -63 -68 -94 -139 -100 -222\n' +
         '-6 -93 15 -158 73 -222 62 -69 127 -96 230 -96 69 -1 89 4 147 31 220 103 294\n' +
-        '370 149 536 -73 83 -216 117 -333 78z')
-    g.append(path)
-    svg.append(g)
-    document.querySelector(`#track${track}`)?.append(svg);
+        '370 149 536 -73 83 -216 117 -333 78z');
+    g.append(path);
+    svg.append(g);
+    document.querySelector(`#track${track}`)
+        ?.append(svg);
 }
-
