@@ -1,8 +1,7 @@
 import './style.scss';
-import {start} from './controller/controller';
+import { start } from './controller/controller';
 
-
-(async () => await start())();
+(async () => start())();
 // drawCar('#c4ff12', 1);
 // drawCar('#c00dd5', 2);
 // drawCar('#1144b0', 3);
