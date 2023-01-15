@@ -39,24 +39,27 @@ class Garage {
   }
 
   /* Delete specified car from a garage */
-  static deleteCar(id: number): void {
-    fetch(`http://127.0.0.1:3000/garage/${id}`, {
+  static async deleteCar(id: number): Promise<void> {
+    await fetch(`http://127.0.0.1:3000/garage/${id}`, {
       method: 'DELETE',
     })
       .then((response) => {
-        response.ok ? console.log('DELETED') : console.log('NOT DELETED');
-      })
-      .catch((error) => console.log(error.text));
+        if (response.ok) {
+          console.log('DELETED');
+        } else {
+          console.log('NOT DELETED');
+        }
+      });
   }
 
   /* Updates attributes of specified car. */
-  static updateCar(data: CarData, id: number): Promise<Car> {
+  static async updateCar(data: CarData, id: number): Promise<Car> {
     return fetch(`http://127.0.0.1:3000/garage/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
-      .then((response) => response.json());
+      .then((response) => response.json() as Promise<Car>);
   }
 }
 

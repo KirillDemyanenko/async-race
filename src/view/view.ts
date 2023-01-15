@@ -1,44 +1,54 @@
 import { buttonUpdateCar, buttonCreateNewCar } from '../controller/controller';
 
-/* Generates a header for the site */
-export function generateHeader(): void {
-  const headerMenu = ['garage', 'winners'];
-  const header = document.createElement('header');
-  const a = document.createElement('a');
-  const img = document.createElement('img');
-  const h1 = document.createElement('h1');
-  const ul = document.createElement('ul');
-  img.setAttribute('src', './assets/logo.png');
-  img.setAttribute('alt', 'Async race');
-  a.append(img);
-  a.setAttribute('href', '/');
-  h1.innerText = 'async race';
-  a.append(h1);
-  header.append(a);
-  for (let i = 0; i < 2; i++) {
-    const li = document.createElement('li');
-    li.innerText = headerMenu[i];
-    ul.append(li);
-  }
-  header.append(ul);
-  document.body.append(header);
-  generateMain();
+/* Generates a footer for the site */
+function generateFooter() {
+  const footer = document.createElement('footer');
+  let button = document.createElement('button');
+  const div = document.createElement('div')
+  let input = document.createElement('input')
+  const p = document.createElement('p')
+  button.classList.add('back__btn')
+  button.innerText = 'previous page'
+  footer.append(button)
+  div.classList.add('page-counter')
+  input.setAttribute('type', 'text')
+  input.id = 'current-page'
+  input.value = '1'
+  div.append(input)
+  p.innerText = '/'
+  div.append(p)
+  div.classList.add('page-counter')
+  input = document.createElement('input')
+  input.setAttribute('type', 'text')
+  input.setAttribute('disabled', 'true')
+  input.id = 'total-pages'
+  div.append(input)
+  footer.append(div)
+  button = document.createElement('button')
+  button.classList.add('forward__btn')
+  button.innerText = 'next page'
+  footer.append(button)
+  document.body.append(footer);
 }
 
 /* Generates a section for the main */
 function generateSectionCarManagement(): HTMLElement {
   const section = document.createElement('section');
   section.classList.add('car-management');
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 2; i += 1) {
     const form = document.createElement('form');
     const button = document.createElement('button');
     button.innerText = i ? 'update car' : 'create car';
     button.addEventListener('click', (ev) => {
       ev.preventDefault();
-      (ev.target as HTMLElement).innerText.includes('CREATE') ? buttonCreateNewCar((ev.target as HTMLElement).parentNode as ParentNode) : buttonUpdateCar();
+      if ((ev.target as HTMLElement).innerText.includes('CREATE')) {
+        buttonCreateNewCar((ev.target as HTMLElement).parentNode as ParentNode);
+      } else {
+        buttonUpdateCar();
+      }
     });
     form.id = i ? 'update-car' : 'create-car';
-    for (let j = 0; j < 2; j++) {
+    for (let j = 0; j < 2; j += 1) {
       const label = document.createElement('label');
       const input = document.createElement('input');
       label.innerText = j ? 'Choose car color' : 'Car model';
@@ -55,15 +65,15 @@ function generateSectionCarManagement(): HTMLElement {
   }
   let div = document.createElement('div');
   div.classList.add('generate-cars');
-  const button = document.createElement('button');
+  let button = document.createElement('button');
   button.id = 'generate-car__btn';
   button.innerText = 'generate 100 cars automatically';
   div.append(button);
   section.append(div);
   div = document.createElement('div');
   div.classList.add('race-management');
-  for (let i = 0; i < 2; i++) {
-    const button = document.createElement('button');
+  for (let i = 0; i < 2; i += 1) {
+    button = document.createElement('button');
     button.id = i ? 'reset__btn' : 'start race';
     button.innerText = i ? 'reset race' : 'start__btn';
     div.append(button);
@@ -78,7 +88,7 @@ function generateMain(): void {
   const section = document.createElement('section');
   main.append(generateSectionCarManagement());
   section.classList.add('race-track');
-  for (let i = 0; i <= 6; i++) {
+  for (let i = 0; i <= 6; i += 1) {
     const div = document.createElement('div');
     div.classList.add('car-track');
     div.id = `track-${i}`;
@@ -89,10 +99,29 @@ function generateMain(): void {
   generateFooter();
 }
 
-/* Generates a footer for the site */
-function generateFooter() {
-  const footer = document.createElement('footer');
-  document.body.append(footer);
+/* Generates a header for the site */
+export function generateHeader(): void {
+  const headerMenu = ['garage', 'winners'];
+  const header = document.createElement('header');
+  const a = document.createElement('a');
+  const img = document.createElement('img');
+  const h1 = document.createElement('h1');
+  const ul = document.createElement('ul');
+  img.setAttribute('src', './assets/logo.png');
+  img.setAttribute('alt', 'Async race');
+  a.append(img);
+  a.setAttribute('href', '/');
+  h1.innerText = 'async race';
+  a.append(h1);
+  header.append(a);
+  for (let i = 0; i < 2; i += 1) {
+    const li = document.createElement('li');
+    li.innerText = headerMenu[i];
+    ul.append(li);
+  }
+  header.append(ul);
+  document.body.append(header);
+  generateMain();
 }
 
 /* Generates an svg image of the car and places it on the desired track */
@@ -139,7 +168,8 @@ export function drawCar(color: string, track: number) {
         + '-28 -824 -60 -452 -32 -820 -60 -818 -62 2 -2 39 -16 82 -31 177 -59 314 -168\n'
         + '376 -299 l34 -70 44 20 c80 36 461 175 634 231 450 147 937 265 1313 318 46 6\n'
         + '82 13 80 14 -2 2 -116 -5 -253 -15 -138 -10 -277 -20 -310 -21 l-59 -3 -78\n'
-        + '199 c-43 109 -80 201 -84 204 -3 3 -42 7 -87 9 -61 2 -87 -1 -103 -12z M9508 3631 c-74 -24 -116 -51 -166 -105 -63 -68 -94 -139 -100 -222\n'
+        + '199 c-43 109 -80 201 -84 204 -3 3 -42 7 -87 9 -61 2 -87 -1 -103 -12z M9508 3631 c-74 -24'
+        + ' -116 -51 -166 -105 -63 -68 -94 -139 -100 -222\n'
         + '-6 -93 15 -158 73 -222 62 -69 127 -96 230 -96 69 -1 89 4 147 31 220 103 294\n'
         + '370 149 536 -73 83 -216 117 -333 78z');
   g.append(path);
@@ -147,3 +177,8 @@ export function drawCar(color: string, track: number) {
   document.querySelector(`#track-${track}`)
     ?.append(svg);
 }
+
+export default {
+  drawCar,
+  generateHeader,
+};

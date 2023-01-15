@@ -196,6 +196,28 @@ body {
     display: flex;
     height: 20px;
     flex: 0 0 auto;
+    justify-content: space-evenly;
+    button {
+      display: flex;
+      padding: 0.2em;
+      width: 20%;
+      background-color: transparent;
+      @include button-style
+    }
+    .page-counter {
+      display: flex;
+      input {
+        display: flex;
+        width: 30px;
+        text-align: center;
+      }
+      p {
+        display: flex;
+        text-transform: uppercase;
+        margin: 0 15px;
+      }
+    }
+
   }
 }
 

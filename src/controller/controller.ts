@@ -2,9 +2,8 @@ import { drawCar, generateHeader } from '../view/view';
 import { Car, CarData } from '../types';
 import Garage from '../model/garage';
 
-export async function buttonCreateNewCar(form: ParentNode) {
+async function buttonCreateNewCar(form: ParentNode) {
   const arr = Array.from(form.children) as Array<HTMLElement>;
-  console.log();
   const carData: CarData = {
     name: (arr[0].lastChild as HTMLInputElement).value,
     color: (arr[1].lastChild as HTMLInputElement).value,
@@ -12,7 +11,7 @@ export async function buttonCreateNewCar(form: ParentNode) {
   await Garage.createCar(carData);
 }
 
-export function buttonUpdateCar() {
+function buttonUpdateCar() {
   console.log('UPDATE');
 }
 
@@ -25,12 +24,14 @@ export async function start(): Promise<void> {
       generateHeader();
     })
     .catch(() => console.log('Server is not available!'));
-  const cars: Car[] = await Garage.getCars();
-  setTimeout(() => console.log(...cars), 2000);
-  setTimeout(() => {
-    for (let i = 0; i <= 7; i += 1) {
-      drawCar(cars[i].color, i);
-      console.log(cars[i]);
-    }
-  }, 3000);
+  // const cars: Car[] = await Garage.getCars();
+  // setTimeout(() => console.log(...cars), 2000);
+  // setTimeout(() => {
+  //   for (let i = 0; i <= 7; i += 1) {
+  //     drawCar(cars[i].color, i);
+  //     console.log(cars[i]);
+  //   }
+  // }, 3000);
 }
+
+export { buttonUpdateCar, buttonCreateNewCar };
