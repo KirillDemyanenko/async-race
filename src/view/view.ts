@@ -1,169 +1,169 @@
-import {buttonCreateNewCar, buttonUpdateCar, generateOneHundredCars} from '../controller/controller';
+import { buttonCreateNewCar, buttonUpdateCar, generateOneHundredCars } from '../controller/controller';
 
 class ContentGenerator {
-    /* Disabled update form */
-    static disableUpdateForm(disable = true): void {
-        const form = Array.from((document.querySelector('#update-car') as ParentNode)?.children);
-        (form[0].lastChild as HTMLElement).setAttribute('disabled', `${disable}`);
-        (form[1].lastChild as HTMLElement)
-            .setAttribute('disabled', `${disable}`);
-        (form[2] as HTMLElement)
-            .setAttribute('disabled', `${disable}`);
-    }
+  /* Disabled update form */
+  static disableUpdateForm(disable = true): void {
+    const form = Array.from((document.querySelector('#update-car') as ParentNode)?.children);
+    (form[0].lastChild as HTMLElement).setAttribute('disabled', `${disable}`);
+    (form[1].lastChild as HTMLElement)
+      .setAttribute('disabled', `${disable}`);
+    (form[2] as HTMLElement)
+      .setAttribute('disabled', `${disable}`);
+  }
 
-    /* Generates a footer for the site */
-    static generateFooter(): void {
-        const footer = document.createElement('footer');
-        let button = document.createElement('button');
-        const div = document.createElement('div');
-        let input = document.createElement('input');
-        const p = document.createElement('p');
-        button.classList.add('back__btn');
-        button.innerText = 'previous page';
-        footer.append(button);
-        div.classList.add('page-counter');
-        input.setAttribute('type', 'number');
-        input.setAttribute('required', 'true');
-        input.setAttribute('value', '1');
-        input.id = 'current-page';
-        input.value = '1';
-        div.append(input);
-        p.innerText = '/';
-        div.append(p);
-        div.classList.add('page-counter');
-        input = document.createElement('input');
-        input.setAttribute('type', 'number');
-        input.setAttribute('readonly', 'true');
-        input.id = 'total-pages';
-        div.append(input);
-        footer.append(div);
-        button = document.createElement('button');
-        button.classList.add('forward__btn');
-        button.innerText = 'next page';
-        footer.append(button);
-        document.body.append(footer);
-        this.disableUpdateForm();
-    }
+  /* Generates a footer for the site */
+  static generateFooter(): void {
+    const footer = document.createElement('footer');
+    let button = document.createElement('button');
+    const div = document.createElement('div');
+    let input = document.createElement('input');
+    const p = document.createElement('p');
+    button.classList.add('back__btn');
+    button.innerText = 'previous page';
+    footer.append(button);
+    div.classList.add('page-counter');
+    input.setAttribute('type', 'number');
+    input.setAttribute('required', 'true');
+    input.setAttribute('value', '1');
+    input.id = 'current-page';
+    input.value = '1';
+    div.append(input);
+    p.innerText = '/';
+    div.append(p);
+    div.classList.add('page-counter');
+    input = document.createElement('input');
+    input.setAttribute('type', 'number');
+    input.setAttribute('readonly', 'true');
+    input.id = 'total-pages';
+    div.append(input);
+    footer.append(div);
+    button = document.createElement('button');
+    button.classList.add('forward__btn');
+    button.innerText = 'next page';
+    footer.append(button);
+    document.body.append(footer);
+    this.disableUpdateForm();
+  }
 
-    /* Generates a section for the main */
-    static generateSectionCarManagement(): HTMLElement {
-        const section = document.createElement('section');
-        section.classList.add('car-management');
-        for (let i = 0; i < 2; i += 1) {
-            const form = document.createElement('form');
-            const button = document.createElement('button');
-            button.innerText = i ? 'update car' : 'create car';
-            button.addEventListener('click', (ev) => {
-                ev.preventDefault();
-                if ((ev.target as HTMLElement).innerText.includes('CREATE')) {
-                    buttonCreateNewCar((ev.target as HTMLElement).parentNode as ParentNode)
-                         .then(() => console.log('Car successfully created'))
-                } else {
-                    buttonUpdateCar().then(() => console.log('Car successfully updated'))
-                }
-            });
-            form.id = i ? 'update-car' : 'create-car';
-            for (let j = 0; j < 2; j += 1) {
-                const label = document.createElement('label');
-                const input = document.createElement('input');
-                label.innerText = j ? 'Choose car color' : 'Car model';
-                input.type = j ? 'color' : 'text';
-                input.placeholder = j ? '' : 'Input car name here';
-                button.id = j ? 'update-car__btn' : 'create-car__btn';
-                label.append(input);
-                form.append(label);
-                form.append(button);
-            }
-            form.append(button);
-            section.append(form);
+  /* Generates a section for the main */
+  static generateSectionCarManagement(): HTMLElement {
+    const section = document.createElement('section');
+    section.classList.add('car-management');
+    for (let i = 0; i < 2; i += 1) {
+      const form = document.createElement('form');
+      const button = document.createElement('button');
+      button.innerText = i ? 'update car' : 'create car';
+      button.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        if ((ev.target as HTMLElement).innerText.includes('CREATE')) {
+          buttonCreateNewCar((ev.target as HTMLElement).parentNode as ParentNode)
+            .then(() => console.log('Car successfully created'));
+        } else {
+          buttonUpdateCar().then(() => console.log('Car successfully updated'));
         }
-        let div = document.createElement('div');
-        div.classList.add('generate-cars');
-        let button = document.createElement('button');
-        button.id = 'generate-car__btn';
-        button.addEventListener('click', async () => {
-            await generateOneHundredCars()
-        })
-        button.innerText = 'generate 100 cars automatically';
-        div.append(button);
-        section.append(div);
-        div = document.createElement('div');
-        div.classList.add('race-management');
-        for (let i = 0; i < 2; i += 1) {
-            button = document.createElement('button');
-            button.id = i ? 'reset__btn' : 'start__btn';
-            button.innerText = i ? 'reset race' : 'start race';
-            div.append(button);
-        }
-        section.append(div);
-        return section;
+      });
+      form.id = i ? 'update-car' : 'create-car';
+      for (let j = 0; j < 2; j += 1) {
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        label.innerText = j ? 'Choose car color' : 'Car model';
+        input.type = j ? 'color' : 'text';
+        input.placeholder = j ? '' : 'Input car name here';
+        button.id = j ? 'update-car__btn' : 'create-car__btn';
+        label.append(input);
+        form.append(label);
+        form.append(button);
+      }
+      form.append(button);
+      section.append(form);
     }
-
-    /* Generates a main for the site */
-    static generateMain(): void {
-        const main = document.createElement('main');
-        const section = document.createElement('section');
-        main.append(this.generateSectionCarManagement());
-        section.classList.add('race-track');
-        for (let i = 0; i <= 6; i += 1) {
-            const div = document.createElement('div');
-            div.classList.add('car-track');
-            div.id = `track-${i}`;
-            section.append(div);
-        }
-        main.append(section);
-        document.body.append(main);
-        this.generateFooter();
+    let div = document.createElement('div');
+    div.classList.add('generate-cars');
+    let button = document.createElement('button');
+    button.id = 'generate-car__btn';
+    button.addEventListener('click', async () => {
+      await generateOneHundredCars();
+    });
+    button.innerText = 'generate 100 cars automatically';
+    div.append(button);
+    section.append(div);
+    div = document.createElement('div');
+    div.classList.add('race-management');
+    for (let i = 0; i < 2; i += 1) {
+      button = document.createElement('button');
+      button.id = i ? 'reset__btn' : 'start__btn';
+      button.innerText = i ? 'reset race' : 'start race';
+      div.append(button);
     }
+    section.append(div);
+    return section;
+  }
 
-    /* Generates a header for the site */
-    static generateHeader(): void {
-        const headerMenu = ['garage', 'winners'];
-        const header = document.createElement('header');
-        const a = document.createElement('a');
-        const img = document.createElement('img');
-        const h1 = document.createElement('h1');
-        const ul = document.createElement('ul');
-        img.setAttribute('src', './assets/logo.png');
-        img.setAttribute('alt', 'Async race');
-        a.append(img);
-        a.setAttribute('href', '/');
-        h1.innerText = 'async race';
-        a.append(h1);
-        header.append(a);
-        for (let i = 0; i < 2; i += 1) {
-            const li = document.createElement('li');
-            li.innerText = headerMenu[i];
-            ul.append(li);
-        }
-        header.append(ul);
-        document.body.append(header);
-        this.generateMain();
+  /* Generates a main for the site */
+  static generateMain(): void {
+    const main = document.createElement('main');
+    const section = document.createElement('section');
+    main.append(this.generateSectionCarManagement());
+    section.classList.add('race-track');
+    for (let i = 0; i <= 6; i += 1) {
+      const div = document.createElement('div');
+      div.classList.add('car-track');
+      div.id = `track-${i}`;
+      section.append(div);
     }
+    main.append(section);
+    document.body.append(main);
+    this.generateFooter();
+  }
 
-    /* Generates svg image of the car and places it on the desired track */
-    static drawCar(color: string, track: number, carName: string) {
-        const ns = 'http://www.w3.org/2000/svg';
-        const svg = document.createElementNS(ns, 'svg');
-        const g = document.createElementNS(ns, 'g');
-        const label = document.createElementNS(ns, 'text');
-        label.setAttribute('font-family', 'Verdana');
-        label.setAttribute('font-size', '200px');
-        label.setAttribute('fill', 'white');
-        // label.setAttribute("x", '600px');
-        label.setAttribute('y', '200px');
-        label.setAttribute('text-anchor', 'start');
-        label.textContent = carName;
-        svg.setAttribute('width', '140px');
-        svg.setAttribute('id', 'svg1');
-        svg.setAttribute('height', '60px');
-        svg.setAttribute('viewBox', '0 0 1280.000000 867.000000');
-        svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-        g.setAttribute('transform', 'translate(0.000000,867.000000) scale(0.100000,-0.10000)');
-        g.setAttribute('fill', color);
-        g.setAttribute('stroke', 'none');
-        const path = document.createElementNS(ns, 'path');
-        path.setAttribute('d', 'M6201 5679 c-569 -30 -1155 -158 -1689 -370 -426 -170 -836 -397\n'
+  /* Generates a header for the site */
+  static generateHeader(): void {
+    const headerMenu = ['garage', 'winners'];
+    const header = document.createElement('header');
+    const a = document.createElement('a');
+    const img = document.createElement('img');
+    const h1 = document.createElement('h1');
+    const ul = document.createElement('ul');
+    img.setAttribute('src', './assets/logo.png');
+    img.setAttribute('alt', 'Async race');
+    a.append(img);
+    a.setAttribute('href', '/');
+    h1.innerText = 'async race';
+    a.append(h1);
+    header.append(a);
+    for (let i = 0; i < 2; i += 1) {
+      const li = document.createElement('li');
+      li.innerText = headerMenu[i];
+      ul.append(li);
+    }
+    header.append(ul);
+    document.body.append(header);
+    this.generateMain();
+  }
+
+  /* Generates svg image of the car and places it on the desired track */
+  static drawCar(color: string, track: number, carName: string) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    const g = document.createElementNS(ns, 'g');
+    const label = document.createElementNS(ns, 'text');
+    label.setAttribute('font-family', 'Verdana');
+    label.setAttribute('font-size', '200px');
+    label.setAttribute('fill', 'white');
+    // label.setAttribute("x", '600px');
+    label.setAttribute('y', '200px');
+    label.setAttribute('text-anchor', 'start');
+    label.textContent = carName;
+    svg.setAttribute('width', '140px');
+    svg.setAttribute('id', 'svg1');
+    svg.setAttribute('height', '60px');
+    svg.setAttribute('viewBox', '0 0 1280.000000 867.000000');
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    g.setAttribute('transform', 'translate(0.000000,867.000000) scale(0.100000,-0.10000)');
+    g.setAttribute('fill', color);
+    g.setAttribute('stroke', 'none');
+    const path = document.createElementNS(ns, 'path');
+    path.setAttribute('d', 'M6201 5679 c-569 -30 -1155 -158 -1689 -370 -426 -170 -836 -397\n'
             + '-1252 -693 l-115 -82 -121 4 -120 4 -34 62 c-56 101 -184 286 -260 374 -40 46\n'
             + '-108 112 -151 145 -69 55 -79 66 -79 95 0 41 -35 62 -75 44 -53 -24 -12 -115\n'
             + '44 -97 37 11 243 -205 361 -380 49 -73 120 -209 120 -230 0 -7 -125 -11 -372\n'
@@ -197,12 +197,12 @@ class ContentGenerator {
             + ' -116 -51 -166 -105 -63 -68 -94 -139 -100 -222\n'
             + '-6 -93 15 -158 73 -222 62 -69 127 -96 230 -96 69 -1 89 4 147 31 220 103 294\n'
             + '370 149 536 -73 83 -216 117 -333 78z');
-        g.append(path);
-        svg.append(g);
-        svg.append(label);
-        document.querySelector(`#track-${track}`)
-            ?.append(svg);
-    }
+    g.append(path);
+    svg.append(g);
+    svg.append(label);
+    document.querySelector(`#track-${track}`)
+      ?.append(svg);
+  }
 }
 
 export default ContentGenerator;
