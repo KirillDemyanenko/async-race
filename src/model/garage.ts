@@ -13,7 +13,7 @@ class Garage {
   }
 
   /* Returns json data about specified car. */
-  static getCar(id: number): Promise<Car> {
+  static async getCar(id: number): Promise<Car> {
     return fetch(`http://127.0.0.1:3000/garage/${id}`)
       .then((response) => {
         if (!response.ok) {
@@ -24,7 +24,7 @@ class Garage {
   }
 
   /* Creates a new car in a garage. */
-  static createCar(data: CarData): Promise<Car> {
+  static async createCar(data: CarData): Promise<Car> {
     return fetch('http://127.0.0.1:3000/garage', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

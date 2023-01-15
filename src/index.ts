@@ -1,4 +1,4 @@
 import './style.scss';
 import { start } from './controller/controller';
 
-(async () => start())();
+start().then(() => console.log('Successfully running!')).catch(() => console.log('Something wrong...'));
