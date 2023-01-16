@@ -1,4 +1,4 @@
-import { buttonCreateNewCar, buttonUpdateCar, generateOneHundredCars } from '../controller/controller';
+import {buttonCreateNewCar, buttonUpdateCar, generateOneHundredCars, selectCar} from '../controller/controller';
 
 class ContentGenerator {
   /* Set total page count */
@@ -7,14 +7,33 @@ class ContentGenerator {
     (document.querySelector('#cars-counter') as HTMLLabelElement).innerText = `There are ${totalCars} cars in your garage`
 
   }
-  /* Disabled update form */
-  static disableUpdateForm(disable = true): void {
+
+  /* Load data in update form */
+  static setDataInUpdateForm(carName: string, color: string): void {
     const form = Array.from((document.querySelector('#update-car') as ParentNode)?.children);
-    (form[0].lastChild as HTMLElement).setAttribute('disabled', `${disable.toString()}`);
+    (form[0].lastChild as HTMLInputElement).value = carName;
+    (form[1].lastChild as HTMLInputElement).value = color;
+
+  }
+
+  /* Enable update form */
+  static enableUpdateForm(): void {
+    const form = Array.from((document.querySelector('#update-car') as ParentNode)?.children);
+    (form[0].lastChild as HTMLElement).removeAttribute('disabled');
     (form[1].lastChild as HTMLElement)
-      .setAttribute('disabled', `${disable.toString()}`);
+        .removeAttribute('disabled');
     (form[2] as HTMLElement)
-      .setAttribute('disabled', `${disable.toString()}`);
+        .removeAttribute('disabled');
+  }
+
+  /* Disabled update form */
+  static disableUpdateForm(): void {
+    const form = Array.from((document.querySelector('#update-car') as ParentNode)?.children);
+    (form[0].lastChild as HTMLElement).setAttribute('disabled', 'true');
+    (form[1].lastChild as HTMLElement)
+      .setAttribute('disabled', 'true');
+    (form[2] as HTMLElement)
+      .setAttribute('disabled', 'true');
   }
 
   /* Generates a footer for the site */
@@ -65,7 +84,7 @@ class ContentGenerator {
           buttonCreateNewCar((ev.target as HTMLElement).parentNode as ParentNode)
             .then(() => console.log('Car successfully created'));
         } else {
-          buttonUpdateCar().then(() => console.log('Car successfully updated'));
+          buttonUpdateCar((ev.target as HTMLElement).parentNode as ParentNode).then(() => console.log('Car successfully updated'));
         }
       });
       form.id = i ? 'update-car' : 'create-car';
@@ -152,11 +171,39 @@ class ContentGenerator {
   }
 
   /* Generates svg image of the car and places it on the desired track */
-  static drawCar(color: string, track: number, carName: string) {
+  static drawCar(color: string, track: number, carName: string, catId: number) {
     const ns = 'http://www.w3.org/2000/svg';
     const svg = document.createElementNS(ns, 'svg');
     const g = document.createElementNS(ns, 'g');
     const label = document.createElementNS(ns, 'text');
+    let ellipse = document.createElementNS(ns, 'ellipse')
+    const text = document.createElementNS(ns, 'text')
+    ellipse.setAttribute('cx','-150')
+    ellipse.setAttribute('cy','600')
+    ellipse.setAttribute('fill','#FF0000')
+    ellipse.setAttribute('rx','150')
+    ellipse.setAttribute('ry','150')
+    ellipse.setAttribute('stroke','#ffffff')
+    ellipse.setAttribute('stroke-width','10')
+    ellipse.addEventListener('click', () => console.log('STOP'))
+    svg.append(ellipse)
+    ellipse = document.createElementNS(ns, 'ellipse')
+    ellipse.setAttribute('cx','-150')
+    ellipse.setAttribute('cy','300')
+    ellipse.setAttribute('fill','#0d5001')
+    ellipse.setAttribute('rx','150')
+    ellipse.setAttribute('ry','150')
+    ellipse.setAttribute('stroke','#ffffff')
+    ellipse.setAttribute('stroke-width','10')
+    ellipse.addEventListener('click', () => console.log('START'))
+    svg.append(ellipse)
+    // text.setAttribute('fill','#000000')
+    // text.setAttribute('font-family','serif')
+    // text.setAttribute('font-size','24')
+    // text.textContent = 'STOP'
+    svg.append(ellipse)
+    // svg.append(text)
+    // <text fill="#000000" font-family="serif" font-size="24" id="svg_3" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="0" style="cursor: move;" text-anchor="middle" x="204.1" xml:space="preserve" y="175.7">STOP</text>
     label.setAttribute('font-family', 'Verdana');
     label.setAttribute('font-size', '200px');
     label.setAttribute('fill', 'white');
@@ -165,7 +212,7 @@ class ContentGenerator {
     label.setAttribute('text-anchor', 'start');
     label.textContent = carName;
     svg.setAttribute('width', '140px');
-    svg.setAttribute('id', 'svg1');
+    svg.setAttribute('id', `svg-${catId}`);
     svg.setAttribute('height', '60px');
     svg.setAttribute('viewBox', '0 0 1280.000000 867.000000');
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
@@ -207,6 +254,14 @@ class ContentGenerator {
             + ' -116 -51 -166 -105 -63 -68 -94 -139 -100 -222\n'
             + '-6 -93 15 -158 73 -222 62 -69 127 -96 230 -96 69 -1 89 4 147 31 220 103 294\n'
             + '370 149 536 -73 83 -216 117 -333 78z');
+    path.addEventListener('click', async () => {
+      try {
+        await selectCar(catId)
+      }
+      catch (error) {
+        console.log(error);
+      }
+    })
     g.append(path);
     svg.append(g);
     svg.append(label);
