@@ -166,7 +166,9 @@ body {
             }
           }
 
-
+          #cars-counter {
+            justify-content: center;
+          }
         }
       }
 
@@ -208,8 +210,11 @@ body {
       display: flex;
       input {
         display: flex;
-        width: 30px;
+        padding: 1px 5px;
+        width: 50px;
         text-align: center;
+        background-color: transparent;
+        border-radius: 5px;
       }
       p {
         display: flex;

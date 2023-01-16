@@ -40,7 +40,15 @@
     ],
     "@typescript-eslint/quotes": "error",
     "@typescript-eslint/no-explicit-any": "error",
-    //    "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [
+      2,
+      {
+        "extensions": [
+          ".tsx",
+          ".jsx"
+        ]
+      }
+    ],
     "strict": "error"
   },
   "parserOptions": {

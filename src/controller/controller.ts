@@ -46,6 +46,7 @@ export async function start(): Promise<void> {
         throw new Error('Server is not available!');
       }
       ContentGenerator.generateHeader();
+      Garage.getCars()
       // ContentGenerator.drawCar('#fff', 1, 'Toyota');
     })
     .catch(() => console.log('Server is not available!'));

@@ -1,14 +1,20 @@
 import { buttonCreateNewCar, buttonUpdateCar, generateOneHundredCars } from '../controller/controller';
 
 class ContentGenerator {
+  /* Set total page count */
+  static setTotalPageCount(totalCars: string) {
+    (document.querySelector('#total-pages') as HTMLInputElement).value = Math.ceil(parseInt(totalCars, 10) / 7).toString();
+    (document.querySelector('#cars-counter') as HTMLLabelElement).innerText = `There are ${totalCars} cars in your garage`
+
+  }
   /* Disabled update form */
   static disableUpdateForm(disable = true): void {
     const form = Array.from((document.querySelector('#update-car') as ParentNode)?.children);
-    (form[0].lastChild as HTMLElement).setAttribute('disabled', `${disable}`);
+    (form[0].lastChild as HTMLElement).setAttribute('disabled', `${disable.toString()}`);
     (form[1].lastChild as HTMLElement)
-      .setAttribute('disabled', `${disable}`);
+      .setAttribute('disabled', `${disable.toString()}`);
     (form[2] as HTMLElement)
-      .setAttribute('disabled', `${disable}`);
+      .setAttribute('disabled', `${disable.toString()}`);
   }
 
   /* Generates a footer for the site */
@@ -79,6 +85,10 @@ class ContentGenerator {
     }
     let div = document.createElement('div');
     div.classList.add('generate-cars');
+    const label = document.createElement('label');
+    label.id = 'cars-counter'
+    label.innerText = 'There are 0 cars in your garage'
+    div.append(label)
     let button = document.createElement('button');
     button.id = 'generate-car__btn';
     button.addEventListener('click', async () => {

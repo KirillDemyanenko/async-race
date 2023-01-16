@@ -1,4 +1,5 @@
 import { Car, CarData } from '../types';
+import ContentGenerator from '../view/view';
 
 class Garage {
   /* Returns json data about cars in a garage. */
@@ -8,6 +9,7 @@ class Garage {
         if (!response.ok) {
           throw new Error(response.statusText);
         }
+          ContentGenerator.setTotalPageCount(response.headers.get('X-Total-Count') as string);
         return response.json() as Promise<Car[]>;
       });
   }
