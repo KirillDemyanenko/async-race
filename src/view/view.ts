@@ -1,4 +1,4 @@
-import {buttonCreateNewCar, buttonUpdateCar, generateOneHundredCars, selectCar} from '../controller/controller';
+import {buttonCreateNewCar, buttonUpdateCar, generateOneHundredCars, redrawCarTrackWithCars, selectCar} from '../controller/controller';
 
 class ContentGenerator {
   /* Set total page count */
@@ -29,9 +29,11 @@ class ContentGenerator {
   /* Disabled update form */
   static disableUpdateForm(): void {
     const form = Array.from((document.querySelector('#update-car') as ParentNode)?.children);
-    (form[0].lastChild as HTMLElement).setAttribute('disabled', 'true');
-    (form[1].lastChild as HTMLElement)
+    (form[0].lastChild as HTMLInputElement).setAttribute('disabled', 'true');
+    (form[0].lastChild as HTMLInputElement).value = '';
+    (form[1].lastChild as HTMLInputElement)
       .setAttribute('disabled', 'true');
+    (form[1].lastChild as HTMLInputElement).value = '#000000';
     (form[2] as HTMLElement)
       .setAttribute('disabled', 'true');
   }
@@ -45,6 +47,13 @@ class ContentGenerator {
     const p = document.createElement('p');
     button.classList.add('back__btn');
     button.innerText = 'previous page';
+    button.addEventListener('click', async () => {
+      const currenPage: number = parseInt((document.querySelector('#current-page') as HTMLInputElement).value, 10);
+      if ( currenPage - 1 > 0) {
+        await redrawCarTrackWithCars(currenPage - 1);
+        (document.querySelector('#current-page') as HTMLInputElement).value = `${currenPage - 1}`
+      }
+    })
     footer.append(button);
     div.classList.add('page-counter');
     input.setAttribute('type', 'number');
@@ -65,6 +74,13 @@ class ContentGenerator {
     button = document.createElement('button');
     button.classList.add('forward__btn');
     button.innerText = 'next page';
+    button.addEventListener('click', async () => {
+      const currenPage: number = parseInt((document.querySelector('#current-page') as HTMLInputElement).value, 10);
+      if ( currenPage + 1 <= parseInt((document.querySelector('#total-pages') as HTMLInputElement).value, 10)) {
+        await redrawCarTrackWithCars(currenPage + 1);
+        (document.querySelector('#current-page') as HTMLInputElement).value = `${currenPage + 1}`
+      }
+    })
     footer.append(button);
     document.body.append(footer);
     this.disableUpdateForm();
@@ -128,11 +144,9 @@ class ContentGenerator {
     return section;
   }
 
-  /* Generates a main for the site */
-  static generateMain(): void {
-    const main = document.createElement('main');
+  /* Generates a section racetrack for the main */
+  static generateRaceTrack(): HTMLElement {
     const section = document.createElement('section');
-    main.append(this.generateSectionCarManagement());
     section.classList.add('race-track');
     for (let i = 0; i <= 6; i += 1) {
       const div = document.createElement('div');
@@ -140,7 +154,14 @@ class ContentGenerator {
       div.id = `track-${i}`;
       section.append(div);
     }
-    main.append(section);
+    return section
+  }
+
+  /* Generates a main for the site */
+  static generateMain(): void {
+    const main = document.createElement('main');
+    main.append(this.generateSectionCarManagement());
+    main.append(this.generateRaceTrack());
     document.body.append(main);
     this.generateFooter();
   }
@@ -177,7 +198,7 @@ class ContentGenerator {
     const g = document.createElementNS(ns, 'g');
     const label = document.createElementNS(ns, 'text');
     let ellipse = document.createElementNS(ns, 'ellipse')
-    const text = document.createElementNS(ns, 'text')
+    // const text = document.createElementNS(ns, 'text')
     ellipse.setAttribute('cx','-150')
     ellipse.setAttribute('cy','600')
     ellipse.setAttribute('fill','#FF0000')
