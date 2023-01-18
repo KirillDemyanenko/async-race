@@ -15,6 +15,29 @@ export async function redrawCarTrackWithCars(page: number): Promise<void> {
         .then(data => data.forEach((car, inx) => ContentGenerator.drawCar(car.color, inx, car.name, car.id)));
 }
 
+export async function startCar(carId: number) {
+    try {
+        await Garage.switchCarEngine('started', carId).then(data => {
+            const element = document.querySelector(`#svg-${carId}`) as HTMLElement
+            element.style.animationDuration = (data.distance / data.velocity).toString()
+            element.style.animationPlayState = 'running'
+            try {
+                Garage.switchCarEngine('drive', carId).catch(error => {
+                    element.style.animationPlayState = 'paused'
+                    console.log(error)
+                })
+            }
+            catch (error) {
+                element.style.animationPlayState = 'paused'
+                console.log(error)
+            }
+        })
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+
 /* OnClick listener for select car */
 export async function selectCar(carId: number): Promise<void> {
     await Garage.getCar(carId)
