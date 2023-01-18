@@ -1,4 +1,11 @@
-import {buttonCreateNewCar, buttonUpdateCar, generateOneHundredCars, redrawCarTrackWithCars, selectCar} from '../controller/controller';
+import {
+  buttonCreateNewCar,
+  buttonUpdateCar,
+  generateOneHundredCars,
+  redrawCarTrackWithCars,
+  selectCar,
+  startCar
+} from '../controller/controller';
 
 class ContentGenerator {
   /* Set total page count */
@@ -192,7 +199,7 @@ class ContentGenerator {
   }
 
   /* Generates svg image of the car and places it on the desired track */
-  static drawCar(color: string, track: number, carName: string, catId: number) {
+  static drawCar(color: string, track: number, carName: string, carId: number) {
     const ns = 'http://www.w3.org/2000/svg';
     const svg = document.createElementNS(ns, 'svg');
     const g = document.createElementNS(ns, 'g');
@@ -216,7 +223,8 @@ class ContentGenerator {
     ellipse.setAttribute('ry','150')
     ellipse.setAttribute('stroke','#ffffff')
     ellipse.setAttribute('stroke-width','10')
-    ellipse.addEventListener('click', () => console.log('START'))
+    ellipse.addEventListener('click', async () => {await startCar(carId)})
+        //(ev) => ((ev.target as HTMLElement).parentNode as HTMLElement).style.animationPlayState = 'running')
     svg.append(ellipse)
     // text.setAttribute('fill','#000000')
     // text.setAttribute('font-family','serif')
@@ -233,7 +241,7 @@ class ContentGenerator {
     label.setAttribute('text-anchor', 'start');
     label.textContent = carName;
     svg.setAttribute('width', '140px');
-    svg.setAttribute('id', `svg-${catId}`);
+    svg.setAttribute('id', `svg-${carId}`);
     svg.setAttribute('height', '60px');
     svg.setAttribute('viewBox', '0 0 1280.000000 867.000000');
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
@@ -277,7 +285,7 @@ class ContentGenerator {
             + '370 149 536 -73 83 -216 117 -333 78z');
     path.addEventListener('click', async () => {
       try {
-        await selectCar(catId)
+        await selectCar(carId)
       }
       catch (error) {
         console.log(error);
