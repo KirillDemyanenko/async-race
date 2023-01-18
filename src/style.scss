@@ -227,10 +227,13 @@ body {
 }
 
 svg {
-  //animation-duration: 5s;
-  //animation-name: slidein;
-  //animation-iteration-count: infinite;
-  //animation-direction: alternate;
+  animation-duration: 7.2s;
+  animation-name: slidein;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-play-state: paused;
   path:hover {
     cursor: pointer;
   }
@@ -239,12 +242,10 @@ svg {
 @keyframes slidein {
   from {
     margin-left: 0;
-    width: 0;
   }
 
   to {
-    margin-left: 0;
-    width: 75%;
+    margin-left: 90%;
   }
 }
 
