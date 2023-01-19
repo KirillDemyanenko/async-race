@@ -1,4 +1,5 @@
 import {
+    Car,
     CarData, CarsAPI, CarsAPIModel
 } from '../types';
 import Garage from '../model/garage';
@@ -8,33 +9,51 @@ import CarModels from '../model/car-models';
 let carsAPI: CarsAPI[] = [];
 let selectedCarId: number;
 
+export async function startRace(): Promise<void> {
+    const arr: Promise<void>[] = Array(7);
+    document.querySelectorAll('svg')
+        .forEach(value => {
+            arr.push(startCar(parseInt(value.id.replace('svg-', ''), 10)));
+        });
+    await Promise.all(arr);
+}
+
+export async function resetRace(): Promise<void> {
+    document.querySelectorAll('.car-track')
+        .forEach(value => value.innerHTML = '');
+    await redrawCarTrackWithCars(parseInt((document.querySelector('#current-page') as HTMLInputElement).value, 10));
+}
+
 export async function redrawCarTrackWithCars(page: number): Promise<void> {
-    document.querySelector('.race-track')!.remove()
-    document.querySelector('main')!.append(ContentGenerator.generateRaceTrack())
+    document.querySelectorAll('.car-track')
+        .forEach(value => value.innerHTML = '');
     await Garage.getCars(page, 7)
-        .then(data => data.forEach((car, inx) => ContentGenerator.drawCar(car.color, inx, car.name, car.id)));
+        .then(data => data.forEach((car, inx) => {
+            ContentGenerator.drawCar(car.color, inx, car.name, car.id)
+        }))
 }
 
 export async function startCar(carId: number) {
     try {
-        await Garage.switchCarEngine('started', carId).then(data => {
-            const element = document.querySelector(`#svg-${carId}`) as HTMLElement
-            element.style.animationDuration = (data.distance / data.velocity).toString()
-            element.style.animationPlayState = 'running'
-            try {
-                Garage.switchCarEngine('drive', carId).catch(error => {
-                    element.style.animationPlayState = 'paused'
-                    console.log(error)
-                })
-            }
-            catch (error) {
-                element.style.animationPlayState = 'paused'
-                console.log(error)
-            }
-        })
-    }
-    catch (error) {
-        console.log(error)
+        await Garage.switchCarEngine('started', carId)
+            .then(data => {
+                const element = document.querySelector(`#svg-${carId}`) as HTMLElement;
+                element.style.animationDuration = `${((data.distance / data.velocity) / 1000).toString()}s`;
+                console.log(((data.distance / data.velocity) / 1000).toString());
+                element.style.animationPlayState = 'running';
+                try {
+                    Garage.switchCarEngine('drive', carId)
+                        .catch(error => {
+                            element.style.animationPlayState = 'paused';
+                            console.log(error);
+                        });
+                } catch (error) {
+                    element.style.animationPlayState = 'paused';
+                    console.log(error);
+                }
+            });
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -51,27 +70,26 @@ export async function selectCar(carId: number): Promise<void> {
 /* OnClick listener for generate 100 new cars */
 export async function generateOneHundredCars(): Promise<void> {
     let count = 0;
-    let timerId = setInterval(async() =>
-    {
-        count++;
-        if (count > 100) {
-            clearInterval(timerId);
-            console.log('done');
-            return
-        }
+    let timerId = setInterval(async () => {
+            count++;
+            if (count > 100) {
+                clearInterval(timerId);
+                console.log('done');
+                return;
+            }
 
-        const carBrand: CarsAPI = carsAPI[Math.floor(Math.random() * carsAPI.length)];
-        const color = `#${(`${Math.random()
-            .toString(16)}000000`).substring(2, 8)
-            .toUpperCase()}`;
-        const model: CarsAPIModel[] = await CarModels.loadCarModel(carBrand.id);
-        await Garage.createCar({
-            name: `${carBrand.name} ${model[Math.floor(Math.random() * model.length)].name}`,
-            color,
-        });
-    }
-)
-    await redrawCarTrackWithCars(parseInt((document.querySelector('#current-page') as HTMLInputElement).value, 10))
+            const carBrand: CarsAPI = carsAPI[Math.floor(Math.random() * carsAPI.length)];
+            const color = `#${(`${Math.random()
+                .toString(16)}000000`).substring(2, 8)
+                .toUpperCase()}`;
+            const model: CarsAPIModel[] = await CarModels.loadCarModel(carBrand.id);
+            await Garage.createCar({
+                name: `${carBrand.name} ${model[Math.floor(Math.random() * model.length)].name}`,
+                color,
+            });
+        }
+    );
+    await redrawCarTrackWithCars(parseInt((document.querySelector('#current-page') as HTMLInputElement).value, 10));
 }
 
 /* OnClick listener for create new car from form data */
@@ -95,7 +113,6 @@ export async function buttonUpdateCar(form: ParentNode): Promise<void> {
     await Garage.updateCar(carData, selectedCarId)
         .then(() => alert('Sucsessfully udated!'));
     const element: SVGGElement = (document.querySelector(`#svg-${selectedCarId}`) as SVGGElement);
-    console.log(typeof element.children[2]);
     element.children[2].setAttribute('fill', carData.color);
     element.children[3].textContent = carData.name;
     ContentGenerator.disableUpdateForm();
