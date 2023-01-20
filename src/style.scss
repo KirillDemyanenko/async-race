@@ -44,6 +44,21 @@ body {
   display: flex;
   flex-direction: column;
 
+  .popup {
+    background-color: white;
+    display: none;
+    position: fixed;
+    margin: 10% 10%;
+    padding: 40px;
+    width: 50%;
+    align-self: center;
+    z-index: 999;
+    text-align: center;
+    font-size: 1.0rem;
+    box-shadow: 0 2px 15px 0 black;
+    animation: popup 1s;
+  }
+
   header {
     display: flex;
     height: 40px;
@@ -265,3 +280,11 @@ svg {
   }
 }
 
+@keyframes popup {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

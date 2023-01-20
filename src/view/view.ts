@@ -203,6 +203,13 @@ class ContentGenerator {
     this.generateMain();
   }
 
+  /* Generates a popup for the site */
+  static generatePopUp(): void {
+    const div = document.createElement('div');
+    div.classList.add('popup');
+    document.body.append(div);
+  }
+
   /* Generates svg image of the car and places it on the desired track */
   static drawCar(color: string, track: number, carName: string, carId: number) {
     const ns = 'http://www.w3.org/2000/svg';
