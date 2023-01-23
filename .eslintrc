@@ -6,16 +6,25 @@
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "airbnb-base",
     "airbnb-typescript",
-    "stylelint-config-standard"
+    "airbnb",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/eslint-recommended"
   ],
   "env": {
     "node": true,
     "es6": true,
     "browser": true
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }},
   "rules": {
     "no-console": "off",
+    "no-param-reassign": "off",
     "max-len": [
       "error",
       {
@@ -23,31 +32,33 @@
       }
     ],
     "semi": [
-      "error",
+      2,
       "always"
     ],
-    "quotes": [
+    "import/extensions": [
       "error",
-      "single"
-    ],
-    "selector-class-pattern": null,
-    "at-rule-no-unknown": [
-      true,
+      "ignorePackages",
       {
-        "ignoreAtRules": ["--my-at-rule"]
+        "js": "never",
+        "ts": "never"
       }
     ],
-    "indentation": "tab",
-    "number-leading-zero": null,
-    "number-max-precision": [
-      4,
+    "@typescript-eslint/quotes": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-misused-promises": [
+      "error",
       {
-        "severity": "warning"
+        "checksVoidReturn": false
       }
     ],
-    "unit-allowed-list": ["em", "rem", "s"]
+    "strict": "error",
+    "import/no-cycle": [
+      "off"
+    ]
   },
   "parserOptions": {
-    "ecmaVersion": "latest"
+    "project": [
+      "tsconfig.json"
+    ]
   }
 }
