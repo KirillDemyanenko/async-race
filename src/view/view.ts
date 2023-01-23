@@ -3,7 +3,7 @@ import {
   buttonUpdateCar,
   generateOneHundredCars,
   redrawCarTrackWithCars, resetRace,
-  selectCar,
+  selectCar, showPopUp,
   startCar, startRace,
 } from '../controller/controller';
 
@@ -55,7 +55,8 @@ class ContentGenerator {
     button.addEventListener('click', async () => {
       const currenPage: number = parseInt((document.querySelector('#current-page') as HTMLInputElement).value, 10);
       if (currenPage - 1 > 0) {
-        await redrawCarTrackWithCars(currenPage - 1);
+        await redrawCarTrackWithCars(currenPage - 1)
+            .catch();
         (document.querySelector('#current-page') as HTMLInputElement).value = `${currenPage - 1}`;
       }
     });
@@ -82,7 +83,7 @@ class ContentGenerator {
     button.addEventListener('click', async () => {
       const currenPage: number = parseInt((document.querySelector('#current-page') as HTMLInputElement).value, 10);
       if (currenPage + 1 <= parseInt((document.querySelector('#total-pages') as HTMLInputElement).value, 10)) {
-        await redrawCarTrackWithCars(currenPage + 1);
+        await redrawCarTrackWithCars(currenPage + 1).then().catch();
         (document.querySelector('#current-page') as HTMLInputElement).value = `${currenPage + 1}`;
       }
     });
@@ -99,13 +100,13 @@ class ContentGenerator {
       const form = document.createElement('form');
       const button = document.createElement('button');
       button.innerText = i ? 'update car' : 'create car';
-      button.addEventListener('click', (ev) => {
+      button.addEventListener('click', async (ev) => {
         ev.preventDefault();
         if ((ev.target as HTMLElement).innerText.includes('CREATE')) {
-          buttonCreateNewCar((ev.target as HTMLElement).parentNode as ParentNode)
-            .then(() => console.log('Car successfully created'));
+          await buttonCreateNewCar((ev.target as HTMLElement).parentNode as ParentNode)
+            .then(() => showPopUp('Car successfully created'));
         } else {
-          buttonUpdateCar((ev.target as HTMLElement).parentNode as ParentNode).then(() => console.log('Car successfully updated'));
+          await buttonUpdateCar((ev.target as HTMLElement).parentNode as ParentNode).then(() => console.log('Car successfully updated'));
         }
       });
       form.id = i ? 'update-car' : 'create-car';
@@ -217,22 +218,11 @@ class ContentGenerator {
     const g = document.createElementNS(ns, 'g');
     const label = document.createElementNS(ns, 'text');
     let ellipse = document.createElementNS(ns, 'ellipse');
-    // let rect = document.createElementNS(ns, 'rect')
-    // rect.id = `del-${carId}`
-    // rect.textContent = 'DEL'
-    // svg.append(rect)
-    // rect = document.createElementNS(ns, 'rect')
-    // rect.id = `upd-${carId}`
-    // rect.textContent = 'UPD'
-    // svg.append(rect)
-    // const text = document.createElementNS(ns, 'text')
     ellipse.setAttribute('cx', '-150');
     ellipse.setAttribute('cy', '600');
     ellipse.setAttribute('fill', '#e50d0d');
     ellipse.setAttribute('rx', '150');
     ellipse.setAttribute('ry', '150');
-    // ellipse.setAttribute('stroke','#ffffff')
-    // ellipse.setAttribute('stroke-width','10')
     ellipse.addEventListener('click', () => console.log('STOP'));
     svg.append(ellipse);
     ellipse = document.createElementNS(ns, 'ellipse');
@@ -241,28 +231,16 @@ class ContentGenerator {
     ellipse.setAttribute('fill', '#0d5001');
     ellipse.setAttribute('rx', '150');
     ellipse.setAttribute('ry', '150');
-    // ellipse.setAttribute('stroke','#ffffff')
-    // ellipse.setAttribute('stroke-width','10')
     ellipse.addEventListener('click', async () => { await startCar(carId); });
-    // (ev) => ((ev.target as HTMLElement).parentNode as HTMLElement).style.animationPlayState = 'running')
     svg.append(ellipse);
-    // text.setAttribute('fill','#000000')
-    // text.setAttribute('font-family','serif')
-    // text.setAttribute('font-size','24')
-    // text.textContent = 'STOP'
     svg.append(ellipse);
-    // svg.append(text)
-    // <text fill="#000000" font-family="serif" font-size="24" id="svg_3" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="0" style="cursor: move;" text-anchor="middle" x="204.1" xml:space="preserve" y="175.7">STOP</text>
     label.setAttribute('font-family', 'Verdana');
     label.setAttribute('font-size', '200px');
     label.setAttribute('fill', 'white');
-    // label.setAttribute("x", '600px');
     label.setAttribute('y', '200px');
     label.setAttribute('text-anchor', 'start');
     label.textContent = carName;
-    // svg.setAttribute('width', '140px');
     svg.setAttribute('id', `svg-${carId}`);
-    // svg.setAttribute('height', '60px');
     svg.setAttribute('viewBox', '0 0 1280.000000 867.000000');
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     g.setAttribute('transform', 'translate(0.000000,867.000000) scale(0.100000,-0.10000)');

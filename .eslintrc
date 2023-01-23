@@ -18,8 +18,13 @@
   "plugins": [
     "@typescript-eslint"
   ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }},
   "rules": {
     "no-console": "off",
+    "no-param-reassign": "off",
     "max-len": [
       "error",
       {
@@ -40,16 +45,16 @@
     ],
     "@typescript-eslint/quotes": "error",
     "@typescript-eslint/no-explicit-any": "error",
-    "react/jsx-filename-extension": [
-      2,
+    "@typescript-eslint/no-misused-promises": [
+      "error",
       {
-        "extensions": [
-          ".tsx",
-          ".jsx"
-        ]
+        "checksVoidReturn": false
       }
     ],
-    "strict": "error"
+    "strict": "error",
+    "import/no-cycle": [
+      "off"
+    ]
   },
   "parserOptions": {
     "project": [

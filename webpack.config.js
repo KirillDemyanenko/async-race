@@ -13,7 +13,7 @@ module.exports = {
         filename: '[name].bundle.js',
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js'],
+        extensions: ['.tsx', '.ts', '.js'],
     },
     devtool: 'inline-source-map',
     devServer: {
@@ -58,7 +58,7 @@ module.exports = {
             patterns: [
                 {
                     from: '**/*',
-                    context: path.resolve(__dirname, 'src', 'assets'),
+                    context: path.resolve(__dirname, 'src/assets'),
                     to: './assets',
                 },
             ],

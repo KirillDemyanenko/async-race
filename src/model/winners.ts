@@ -1,5 +1,5 @@
 import {
-  Car, CarData, Winner, WinnerData,
+  Winner, WinnerData,
 } from '../types';
 
 class Winners {
